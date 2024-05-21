@@ -22,37 +22,43 @@ clock = pygame.time.Clock()
 # Particle class
 class Particle:
 		def __init__(self, x, y, radius, color, speed, angle) -> None:
-				self.x == x
-				self.y == y
-				self.radius == radius
-				self.color == color
-				self.speed == speed
-				self.angle == angle
+				self.x = x
+				self.y = y
+				self.radius = radius
+				self.color = color
+				self.speed = speed
+				self.angle = angle
 		
 		def move(self):
 			self.x += self.speed * math.cos(self.angle)
 			self.y += self.speed * math.sin(self.angle)
+
+			# Bounce off the walls
+			if self.x - self.radius < 0 or self.x + self.radius > SCREEN_WIDTH:
+					self.angle = math.pi - self.angle
+			if self.y - self.radius < 0 or self.y + self.radius > SCREEN_HEIGHT:
+					self.angle = -self.angle
 		
+
 		def draw(self, screen):
 			pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
 
 
 
 # Make some particles, and asign them random properties
-def createParticle(n):
-	particles = []
+particles = []
 
-	for _ in range(n):
-		x = random.randint(50, SCREEN_WIDTH - 50)
-		y = random.randint(50, SCREEN_HEIGHT - 50)
+for _ in range(10):
+	x = random.randint(50, SCREEN_WIDTH - 50)
+	y = random.randint(50, SCREEN_HEIGHT - 50)
 
-		radius = random.randint(10, 20)
-		color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-		speed = random.uniform(1, 3)
-		angle = random.uniform(0, 2 * math.pi)
-		particles.append(Particle(x, y, radius, color, speed, angle))
+	radius = random.randint(10, 20)
+	color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+	speed = random.uniform(1, 3)
+	angle = random.uniform(0, 2 * math.pi)
 
-		return particles
+	particles.append(Particle(x, y, radius, color, speed, angle))
+
 
 
 # Game loop
@@ -63,5 +69,19 @@ while running:
 		for event in pygame.event.get():
 				if (event.type == pygame.QUIT):
 						running = False
+		
+		# Clear screen
+		screen.fill((0, 0, 0))
+
+		# Draw the particles
+		for particle in particles:
+			particle.move()
+			particle.draw(screen)
+
+		# Update the screen
+		pygame.display.flip()
+
+		# Cap the FPS to 60
+		clock.tick(60)
 
 pygame.quit()
