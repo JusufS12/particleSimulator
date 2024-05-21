@@ -33,11 +33,11 @@ class Particle:
 			self.x += self.speed * math.cos(self.angle)
 			self.y += self.speed * math.sin(self.angle)
 
-			# Bounce off the walls
+			# Collision with walls
 			if self.x - self.radius < 0 or self.x + self.radius > SCREEN_WIDTH:
-					self.angle = math.pi - self.angle
+				self.angle = math.pi - self.angle
 			if self.y - self.radius < 0 or self.y + self.radius > SCREEN_HEIGHT:
-					self.angle = -self.angle
+				self.angle = -self.angle
 		
 
 		def draw(self, screen):
@@ -67,7 +67,7 @@ running = True
 while running:
 		# Check if the player wants to close the window
 		for event in pygame.event.get():
-				if (event.type == pygame.QUIT):
+				if event.type == pygame.QUIT:
 						running = False
 		
 		# Clear screen
