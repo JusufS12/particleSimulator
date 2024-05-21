@@ -19,29 +19,49 @@ clock = pygame.time.Clock()
 
 
 
+# Particle class
 class Particle:
-    def __init__(self, x, y, radius, color, speed, angle) -> None:
-        self.x == x
-        self.y == y
-        self.radius == radius
-        self.color == color
-        self.speed == speed
-        self.angle == angle
-    
-    def move():
-        pass
-    
-    def draw():
-        pass
+		def __init__(self, x, y, radius, color, speed, angle) -> None:
+				self.x == x
+				self.y == y
+				self.radius == radius
+				self.color == color
+				self.speed == speed
+				self.angle == angle
+		
+		def move(self):
+			self.x += self.speed * math.cos(self.angle)
+			self.y += self.speed * math.sin(self.angle)
+		
+		def draw(self, screen):
+			pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
+
+
+
+# Make some particles, and asign them random properties
+def createParticle(n):
+	particles = []
+
+	for _ in range(n):
+		x = random.randint(50, SCREEN_WIDTH - 50)
+		y = random.randint(50, SCREEN_HEIGHT - 50)
+
+		radius = random.randint(10, 20)
+		color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+		speed = random.uniform(1, 3)
+		angle = random.uniform(0, 2 * math.pi)
+		particles.append(Particle(x, y, radius, color, speed, angle))
+
+		return particles
 
 
 # Game loop
 running = True
 
 while running:
-    # Check if the player wants to close the window
-    for event in pygame.event.get():
-        if (event.type == pygame.QUIT):
-            running = False
+		# Check if the player wants to close the window
+		for event in pygame.event.get():
+				if (event.type == pygame.QUIT):
+						running = False
 
 pygame.quit()
