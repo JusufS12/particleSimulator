@@ -18,6 +18,23 @@ pygame.display.set_caption("Particle Simulation")
 clock = pygame.time.Clock()
 
 
+
+class Particle:
+    def __init__(self, x, y, radius, color, speed, angle) -> None:
+        self.x == x
+        self.y == y
+        self.radius == radius
+        self.color == color
+        self.speed == speed
+        self.angle == angle
+    
+    def move():
+        pass
+    
+    def draw():
+        pass
+
+
 # Game loop
 running = True
 
